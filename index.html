@@ -8,319 +8,172 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700;900&display=swap');
         
         body {
             font-family: 'Inter', system-ui, sans-serif;
             background: #0a0a0a;
             color: #f1f1f1;
         }
-        
-        .title-font {
-            font-family: 'Playfair Display', sans-serif;
-        }
+        .title { font-family: 'Playfair Display', sans-serif; letter-spacing: -0.04em; }
+        .neon { text-shadow: 0 0 25px #10b981, 0 0 50px #10b981; }
 
-        .tattoo-bg {
-            background-image: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.85)), url('https://picsum.photos/id/1015/800/600');
-            background-size: cover;
-            background-position: center;
+        .card {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
-        .photo-card {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .photo-card:hover {
-            transform: scale(1.03);
-            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-        }
+        .card:hover { transform: translateY(-10px); }
+        .glass { background: rgba(255,255,255,0.06); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); }
 
         .slot {
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
         }
-        
         .slot.selected {
             background-color: #10b981;
-            color: white;
-            border-color: #10b981;
+            color: black;
+            transform: scale(1.1);
         }
     </style>
 </head>
 <body class="min-h-screen pb-24">
-    <div id="app" class="max-w-md mx-auto">
+    <div class="max-w-md mx-auto bg-black min-h-screen">
         <!-- HEADER -->
-        <div class="bg-black border-b border-zinc-800 sticky top-0 z-50">
-            <div class="flex items-center justify-between px-4 py-4">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 bg-emerald-600 rounded-2xl flex items-center justify-center text-2xl">🖤</div>
-                    <div>
-                        <div class="text-xl font-semibold title-font">SINEKO</div>
-                        <div class="text-xs text-emerald-400 -mt-1">TATTOO</div>
-                    </div>
+        <div class="fixed top-0 w-full max-w-md bg-zinc-950 border-b border-zinc-800 z-50 px-5 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-11 h-11 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center text-3xl shadow-lg">🖤</div>
+                <div>
+                    <div class="title text-3xl font-bold neon">SINEKO</div>
+                    <div class="text-xs text-emerald-400 -mt-1">TATTOO</div>
                 </div>
-                <button onclick="showMainMenu()" 
-                        class="text-zinc-400 hover:text-white transition-colors">
-                    <i class="fa-solid fa-house"></i>
-                </button>
             </div>
+            <button onclick="showMainMenu()" class="text-3xl text-zinc-400 hover:text-white">⌂</button>
         </div>
 
-        <!-- MAIN CONTENT -->
-        <div id="main-content" class="px-4 pt-6">
-            <!-- GREETING SCREEN -->
-            <div id="greeting" class="text-center">
-                <div class="tattoo-bg h-80 rounded-3xl flex items-end p-6 mb-8 shadow-2xl">
-                    <div class="text-left">
-                        <h1 class="text-4xl title-font font-bold mb-2">Софія</h1>
-                        <p class="text-emerald-300 text-xl">Тату-майстер</p>
-                        <p class="text-zinc-400 mt-4">Маю художню освіту 💚<br>Створюю унікальні тату</p>
+        <div class="pt-20 px-5">
+            <!-- GREETING -->
+            <div id="greeting">
+                <div class="relative h-[420px] rounded-3xl overflow-hidden shadow-2xl mb-10">
+                    <img src="https://picsum.photos/id/1015/800/1200" class="w-full h-full object-cover" alt="Софія">
+                    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-black/70 to-black"></div>
+                    <div class="absolute bottom-10 left-8">
+                        <h1 class="title text-6xl font-black neon">Софія</h1>
+                        <p class="text-emerald-300 text-2xl">Тату-майстер</p>
                     </div>
                 </div>
-                
-                <button onclick="showMainMenu()" 
-                        class="w-full bg-white text-black font-semibold py-4 rounded-2xl text-lg shadow-lg hover:bg-zinc-100 transition-colors">
-                    Почати запис →
-                </button>
+                <button onclick="showMainMenu()" class="w-full py-7 bg-white text-black rounded-3xl text-2xl font-semibold">Почати запис</button>
             </div>
 
             <!-- MAIN MENU -->
-            <div id="main-menu" class="hidden">
-                <div class="grid grid-cols-2 gap-4">
-                    <button onclick="showPortfolio()" 
-                            class="bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 rounded-3xl p-6 text-left transition-all active:scale-95">
-                        <div class="text-4xl mb-4">📸</div>
-                        <div class="font-semibold text-lg">Портфоліо</div>
-                        <div class="text-zinc-400 text-sm">Роботи Софії</div>
-                    </button>
-                    
-                    <button onclick="showBooking()" 
-                            class="bg-emerald-600 hover:bg-emerald-700 rounded-3xl p-6 text-left transition-all active:scale-95">
-                        <div class="text-4xl mb-4">📅</div>
-                        <div class="font-semibold text-lg">Записатися</div>
-                        <div class="text-emerald-100 text-sm">На сеанс</div>
-                    </button>
-                    
-                    <button onclick="showPrice()" 
-                            class="bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 rounded-3xl p-6 text-left transition-all active:scale-95">
-                        <div class="text-4xl mb-4">💰</div>
-                        <div class="font-semibold text-lg">Прайс</div>
-                        <div class="text-zinc-400 text-sm">Ціни на послуги</div>
-                    </button>
-                    
-                    <a href="https://www.instagram.com/sineko_tattoo/" target="_blank"
-                       class="bg-gradient-to-br from-pink-500 to-purple-600 hover:brightness-110 rounded-3xl p-6 text-left transition-all active:scale-95 flex flex-col justify-between">
-                        <div class="text-4xl mb-4">📷</div>
-                        <div>
-                            <div class="font-semibold text-lg">Instagram</div>
-                            <div class="text-xs opacity-75">@sineko_tattoo</div>
-                        </div>
-                    </a>
-                </div>
-                
-                <a href="https://www.tiktok.com/@sineko_tattoo" target="_blank"
-                   class="mt-4 block bg-black border border-zinc-700 hover:bg-zinc-900 rounded-3xl p-6 text-center transition-all">
-                    <span class="text-3xl">🎵</span>
-                    <span class="font-semibold ml-3">TikTok @sineko_tattoo</span>
+            <div id="main-menu" class="hidden grid grid-cols-2 gap-4">
+                <button onclick="showPortfolio()" class="card glass rounded-3xl p-8 text-left">
+                    <div class="text-6xl mb-6">📸</div>
+                    <div class="title text-3xl font-bold">Портфоліо</div>
+                </button>
+                <button onclick="showBooking()" class="card bg-gradient-to-br from-emerald-600 to-teal-600 rounded-3xl p-8 text-left text-white">
+                    <div class="text-6xl mb-6">📅</div>
+                    <div class="title text-3xl font-bold">Записатися</div>
+                </button>
+                <button onclick="showPrice()" class="card glass rounded-3xl p-8 text-left">
+                    <div class="text-6xl mb-6">💎</div>
+                    <div class="title text-3xl font-bold">Прайс</div>
+                </button>
+                <a href="https://www.instagram.com/sineko_tattoo/" target="_blank" class="card bg-gradient-to-br from-pink-500 to-purple-600 rounded-3xl p-8 text-left text-white">
+                    <div class="text-6xl mb-6">📷</div>
+                    <div class="title text-3xl font-bold">Instagram</div>
                 </a>
             </div>
 
             <!-- PORTFOLIO -->
             <div id="portfolio-screen" class="hidden">
-                <div class="flex items-center justify-between mb-6">
-                    <h2 class="text-2xl font-semibold title-font">Портфоліо</h2>
-                    <button onclick="showMainMenu()" class="text-emerald-400 text-sm flex items-center gap-1">
-                        <i class="fa-solid fa-arrow-left"></i> Меню
-                    </button>
-                </div>
-                
-                <div class="grid grid-cols-3 gap-3">
-                    <div onclick="showCategory('5cm')" class="photo-card bg-zinc-900 rounded-2xl overflow-hidden cursor-pointer">
-                        <div class="h-28 bg-[url('https://picsum.photos/id/1015/300/300')] bg-cover"></div>
-                        <div class="p-3 text-center text-sm">5 см</div>
+                <h2 class="title text-4xl font-bold mb-6">Портфоліо</h2>
+                <div class="grid grid-cols-3 gap-4">
+                    <div onclick="showCategory('5см')" class="card glass rounded-3xl overflow-hidden cursor-pointer">
+                        <div class="h-32 bg-[url('https://picsum.photos/id/1015/300/300')] bg-cover"></div>
+                        <div class="p-4 text-center">5 см</div>
                     </div>
-                    <div onclick="showCategory('10cm')" class="photo-card bg-zinc-900 rounded-2xl overflow-hidden cursor-pointer">
-                        <div class="h-28 bg-[url('https://picsum.photos/id/201/300/300')] bg-cover"></div>
-                        <div class="p-3 text-center text-sm">10 см</div>
+                    <div onclick="showCategory('10см')" class="card glass rounded-3xl overflow-hidden cursor-pointer">
+                        <div class="h-32 bg-[url('https://picsum.photos/id/201/300/300')] bg-cover"></div>
+                        <div class="p-4 text-center">10 см</div>
                     </div>
-                    <div onclick="showCategory('15cm')" class="photo-card bg-zinc-900 rounded-2xl overflow-hidden cursor-pointer">
-                        <div class="h-28 bg-[url('https://picsum.photos/id/301/300/300')] bg-cover"></div>
-                        <div class="p-3 text-center text-sm">15 см</div>
+                    <div onclick="showCategory('15см')" class="card glass rounded-3xl overflow-hidden cursor-pointer">
+                        <div class="h-32 bg-[url('https://picsum.photos/id/301/300/300')] bg-cover"></div>
+                        <div class="p-4 text-center">15 см</div>
                     </div>
                 </div>
             </div>
 
-            <!-- CATEGORY GALLERY -->
-            <div id="category-gallery" class="hidden">
-                <div class="flex items-center gap-3 mb-6">
-                    <button onclick="showPortfolio()" class="text-emerald-400">
-                        <i class="fa-solid fa-arrow-left text-xl"></i>
-                    </button>
-                    <h2 id="category-title" class="text-2xl font-semibold title-font"></h2>
+            <!-- BOOKING -->
+            <div id="booking-screen" class="hidden">
+                <h2 class="title text-4xl font-bold mb-6">Запис на сеанс</h2>
+                
+                <div id="step-service">
+                    <h3 class="mb-4 text-lg">Оберіть розмір тату</h3>
+                    <div class="space-y-3">
+                        <button onclick="selectService('5см')" class="w-full py-5 glass rounded-3xl text-left px-6">5 см — 1500 грн</button>
+                        <button onclick="selectService('10см')" class="w-full py-5 glass rounded-3xl text-left px-6">10 см — 2500 грн</button>
+                        <button onclick="selectService('15см')" class="w-full py-5 glass rounded-3xl text-left px-6">15 см — 3500 грн</button>
+                    </div>
                 </div>
-                <div id="photos-container" class="grid grid-cols-2 gap-3"></div>
+
+                <div id="step-date" class="hidden">
+                    <h3 class="mb-4">Оберіть дату</h3>
+                    <div id="dates" class="grid grid-cols-2 gap-3"></div>
+                </div>
+
+                <div id="step-time" class="hidden">
+                    <h3 class="mb-4">Оберіть час</h3>
+                    <div id="times" class="grid grid-cols-3 gap-3"></div>
+                </div>
+
+                <div id="step-contacts" class="hidden">
+                    <input id="name" placeholder="Ім'я та прізвище" class="w-full py-5 px-6 glass rounded-3xl mb-4">
+                    <input id="phone" placeholder="+380 XX XXX XX XX" class="w-full py-5 px-6 glass rounded-3xl mb-6">
+                    <button onclick="submitBooking()" class="w-full py-6 bg-emerald-600 rounded-3xl text-xl font-semibold">Підтвердити запис</button>
+                </div>
             </div>
 
             <!-- PRICE -->
             <div id="price-screen" class="hidden">
-                <div class="flex items-center justify-between mb-6">
-                    <h2 class="text-2xl font-semibold title-font">Прайс</h2>
-                    <button onclick="showMainMenu()" class="text-emerald-400">← Меню</button>
-                </div>
-                <div class="bg-zinc-900 rounded-3xl p-6 text-center">
-                    <img id="price-image" src="https://via.placeholder.com/600x800/111/eee?text=PRICE" 
-                         class="mx-auto rounded-2xl shadow-2xl" alt="Прайс">
-                    <p class="text-zinc-400 mt-6 text-sm">Актуально на червень 2026</p>
-                </div>
-            </div>
-
-            <!-- BOOKING FLOW -->
-            <div id="booking-screen" class="hidden">
-                <div class="flex justify-between items-center mb-6">
-                    <h2 class="text-2xl font-semibold title-font">Новий запис</h2>
-                    <button onclick="resetBooking()" class="text-red-400 text-sm">Скасувати</button>
-                </div>
-
-                <!-- STEP 1: SERVICE -->
-                <div id="step-service" class="booking-step">
-                    <h3 class="font-medium mb-4 text-lg">Оберіть розмір тату</h3>
-                    <div class="space-y-3">
-                        <button onclick="selectService('5cm')" class="w-full bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 rounded-2xl p-5 text-left transition-all">5 см — 1500 грн</button>
-                        <button onclick="selectService('10cm')" class="w-full bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 rounded-2xl p-5 text-left transition-all">10 см — 2500 грн</button>
-                        <button onclick="selectService('15cm')" class="w-full bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 rounded-2xl p-5 text-left transition-all">15 см — 3500 грн</button>
-                    </div>
-                </div>
-
-                <!-- STEP 2: DATE -->
-                <div id="step-date" class="booking-step hidden">
-                    <h3 class="font-medium mb-4">Оберіть дату</h3>
-                    <div id="date-list" class="grid grid-cols-2 gap-3"></div>
-                </div>
-
-                <!-- STEP 3: TIME -->
-                <div id="step-time" class="booking-step hidden">
-                    <h3 class="font-medium mb-4">Оберіть час</h3>
-                    <div id="time-slots" class="grid grid-cols-3 gap-3"></div>
-                </div>
-
-                <!-- STEP 4: CONTACTS -->
-                <div id="step-contacts" class="booking-step hidden">
-                    <h3 class="font-medium mb-4">Ваші дані</h3>
-                    <input id="client-name" type="text" placeholder="Ім'я та прізвище" 
-                           class="w-full bg-zinc-900 border border-zinc-700 rounded-2xl px-5 py-4 mb-4 focus:outline-none focus:border-emerald-500">
-                    <input id="client-phone" type="tel" placeholder="+380 XX XXX XX XX" 
-                           class="w-full bg-zinc-900 border border-zinc-700 rounded-2xl px-5 py-4 focus:outline-none focus:border-emerald-500">
-                    
-                    <button onclick="submitBooking()" 
-                            class="mt-8 w-full bg-emerald-600 hover:bg-emerald-700 py-5 rounded-2xl font-semibold text-lg">
-                        Підтвердити запис
-                    </button>
-                </div>
-            </div>
-
-            <!-- SUCCESS SCREEN -->
-            <div id="success-screen" class="hidden text-center py-12">
-                <div class="text-7xl mb-6">🎉</div>
-                <h2 class="text-3xl font-semibold title-font mb-3">Запис створено!</h2>
-                <p class="text-zinc-400 mb-8">Софія зв'яжеться з вами найближчим часом для підтвердження</p>
-                <button onclick="showMainMenu()" 
-                        class="bg-white text-black px-8 py-4 rounded-2xl font-semibold">
-                    Повернутися в меню
-                </button>
+                <h2 class="title text-4xl font-bold mb-6">Прайс</h2>
+                <img src="https://picsum.photos/id/870/600/900" class="rounded-3xl w-full shadow-2xl" alt="Прайс">
             </div>
         </div>
     </div>
 
     <script>
-        // Telegram WebApp
         const tg = window.Telegram.WebApp;
         tg.expand();
-        tg.setHeaderColor("#111111");
-        tg.setBackgroundColor("#0a0a0a");
+        tg.setHeaderColor("#0a0a0a");
 
-        // DATA
-        let currentUser = { id: tg.initDataUnsafe?.user?.id || 123456 };
         let bookingData = {};
-        let lastBookingDate = localStorage.getItem('lastBooking_' + currentUser.id);
+        let lastBooking = localStorage.getItem('lastBooking');
 
-        // Time slots
-        const timeSlots = [
-            "10:00", "11:00", "12:00", "13:00", 
-            "14:00", "15:00", "16:00", "17:00", "18:00"
-        ];
-
-        function showScreen(screenId) {
-            document.querySelectorAll('.booking-step').forEach(el => el.classList.add('hidden'));
-            document.getElementById('greeting').classList.add('hidden');
-            document.getElementById('main-menu').classList.add('hidden');
-            document.getElementById('portfolio-screen').classList.add('hidden');
-            document.getElementById('category-gallery').classList.add('hidden');
-            document.getElementById('price-screen').classList.add('hidden');
-            document.getElementById('booking-screen').classList.add('hidden');
-            document.getElementById('success-screen').classList.add('hidden');
-            
-            document.getElementById(screenId).classList.remove('hidden');
+        function showScreen(id) {
+            document.querySelectorAll('div[id$="-screen"], #greeting, #main-menu').forEach(el => el.classList.add('hidden'));
+            document.getElementById(id).classList.remove('hidden');
         }
 
         function showMainMenu() {
             showScreen('main-menu');
         }
 
-        // PORTFOLIO
-        function showPortfolio() {
-            showScreen('portfolio-screen');
-        }
+        function showPortfolio() { showScreen('portfolio-screen'); }
+        function showPrice() { showScreen('price-screen'); }
 
-        function showCategory(size) {
-            const container = document.getElementById('photos-container');
-            container.innerHTML = '';
-            
-            document.getElementById('category-title').textContent = `${size} • Портфоліо`;
-            
-            // Demo photos
-            const photos = [
-                `https://picsum.photos/id/${100 + parseInt(size)}/600/800`,
-                `https://picsum.photos/id/${200 + parseInt(size)}/600/800`,
-                `https://picsum.photos/id/${300 + parseInt(size)}/600/800`
-            ];
-            
-            photos.forEach(src => {
-                const div = document.createElement('div');
-                div.className = "photo-card rounded-3xl overflow-hidden border border-zinc-800";
-                div.innerHTML = `<img src="${src}" class="w-full aspect-square object-cover">`;
-                container.appendChild(div);
-            });
-            
-            showScreen('category-gallery');
-        }
-
-        // PRICE
-        function showPrice() {
-            showScreen('price-screen');
-            // Заміни на реальне фото price.jpg
-            document.getElementById('price-image').src = "https://picsum.photos/id/870/600/900";
-        }
-
-        // BOOKING
         function showBooking() {
-            if (lastBookingDate) {
-                const last = new Date(lastBookingDate);
-                const now = new Date();
-                const diffHours = (now - last) / (1000 * 60 * 60);
-                
-                if (diffHours < 24) {
-                    alert("Ви вже записувалися сьогодні. Наступний запис можливий через 24 години.");
-                    return;
-                }
+            if (lastBooking && (Date.now() - new Date(lastBooking) < 86400000)) {
+                alert("Ви вже записувалися сьогодні. Спробуйте завтра.");
+                return;
             }
-            
             bookingData = {};
-            resetBookingSteps();
+            resetSteps();
             showScreen('booking-screen');
             document.getElementById('step-service').classList.remove('hidden');
         }
 
-        function resetBookingSteps() {
-            document.querySelectorAll('.booking-step').forEach(s => s.classList.add('hidden'));
+        function resetSteps() {
+            document.getElementById('step-date').classList.add('hidden');
+            document.getElementById('step-time').classList.add('hidden');
+            document.getElementById('step-contacts').classList.add('hidden');
         }
 
         function selectService(size) {
@@ -331,27 +184,16 @@
         }
 
         function renderDates() {
-            const container = document.getElementById('date-list');
+            const container = document.getElementById('dates');
             container.innerHTML = '';
-            
             const today = new Date();
-            
-            for (let i = 0; i < 11; i++) {
-                const date = new Date(today);
-                date.setDate(date.getDate() + i);
-                
-                const dayName = date.toLocaleDateString('uk-UA', { weekday: 'short' });
-                const dayNum = date.getDate();
-                const month = date.toLocaleDateString('uk-UA', { month: 'short' });
-                
+            for (let i = 0; i < 10; i++) {
+                const d = new Date(today);
+                d.setDate(d.getDate() + i);
                 const btn = document.createElement('button');
-                btn.className = `slot bg-zinc-900 border border-zinc-700 hover:border-emerald-500 rounded-2xl p-4 text-center transition-all`;
-                btn.innerHTML = `
-                    <div class="text-emerald-400 text-sm">${dayName}</div>
-                    <div class="text-2xl font-semibold">${dayNum}</div>
-                    <div class="text-xs text-zinc-400">${month}</div>
-                `;
-                btn.onclick = () => selectDate(date);
+                btn.className = 'slot glass rounded-3xl p-4 text-center';
+                btn.innerHTML = `<div class="text-sm">${d.toLocaleDateString('uk-UA', {weekday:'short'})}</div><div class="text-2xl font-bold">${d.getDate()}</div>`;
+                btn.onclick = () => selectDate(d);
                 container.appendChild(btn);
             }
         }
@@ -360,70 +202,48 @@
             bookingData.date = date.toISOString().split('T')[0];
             document.getElementById('step-date').classList.add('hidden');
             document.getElementById('step-time').classList.remove('hidden');
-            renderTimeSlots();
+            renderTimes();
         }
 
-        function renderTimeSlots() {
-            const container = document.getElementById('time-slots');
+        function renderTimes() {
+            const times = ["10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00"];
+            const container = document.getElementById('times');
             container.innerHTML = '';
-            
-            timeSlots.forEach(time => {
+            times.forEach(t => {
                 const btn = document.createElement('button');
-                btn.className = `slot bg-zinc-900 border border-zinc-700 hover:border-emerald-500 rounded-2xl py-4 text-center font-medium`;
-                btn.textContent = time;
-                btn.onclick = () => selectTime(time);
+                btn.className = 'slot glass rounded-3xl py-4 text-center font-medium';
+                btn.textContent = t;
+                btn.onclick = () => {
+                    bookingData.time = t;
+                    document.getElementById('step-time').classList.add('hidden');
+                    document.getElementById('step-contacts').classList.remove('hidden');
+                };
                 container.appendChild(btn);
             });
         }
 
-        function selectTime(time) {
-            bookingData.time = time;
-            document.getElementById('step-time').classList.add('hidden');
-            document.getElementById('step-contacts').classList.remove('hidden');
-        }
-
         function submitBooking() {
-            const name = document.getElementById('client-name').value.trim();
-            const phone = document.getElementById('client-phone').value.trim();
-            
-            if (!name || !phone) {
-                alert("Будь ласка, заповніть ім'я та телефон");
-                return;
-            }
-            
+            const name = document.getElementById('name').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            if (!name || !phone) return alert("Заповніть дані");
+
             bookingData.name = name;
             bookingData.phone = phone;
-            bookingData.userId = currentUser.id;
+
+            localStorage.setItem('lastBooking', new Date().toISOString());
             
-            // Save to localStorage (in real project — send to backend)
-            localStorage.setItem('lastBooking_' + currentUser.id, new Date().toISOString());
-            
-            // Simulate sending to master
-            console.log("НОВИЙ ЗАПИС:", bookingData);
-            
-            showScreen('success-screen');
+            alert(`✅ Запис підтверджено!\n\nПослуга: ${bookingData.service}\nДата: ${bookingData.date}\nЧас: ${bookingData.time}\n\nСофія зв'яжеться з вами.`);
+            showMainMenu();
         }
 
-        function resetBooking() {
-            if (confirm("Скасувати запис?")) {
-                showMainMenu();
-            }
+        function showCategory(cat) {
+            alert(`Альбом робіт ${cat} см (відправлено як медіагрупа)`);
         }
 
-        // Init
-        function init() {
+        window.onload = () => {
             tg.ready();
-            showScreen('greeting');
-            
-            // Demo: auto open menu after 2 seconds
-            setTimeout(() => {
-                if (document.getElementById('greeting').classList.contains('hidden') === false) {
-                    showMainMenu();
-                }
-            }, 2500);
-        }
-
-        window.onload = init;
+            setTimeout(() => showMainMenu(), 1500);
+        };
     </script>
 </body>
 </html>
